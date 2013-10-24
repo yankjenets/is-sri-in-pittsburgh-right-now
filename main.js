@@ -10,7 +10,7 @@ function updateText() {
     var item = data.response.user.checkins.items[0]
     var date = item.createdAt;
     var currentTime = new Date();
-    var minutesSinceCheckin = (currentTime.getTime() / 1000 - date) / 60;
+    minutesSinceCheckin = (currentTime.getTime() / 1000 - date) / 60;
     var currentLat = item.venue.location.lat;
     var currentLong = item.venue.location.lng;
     var kilometersFromPittsburgh = Math.round(calculateDistance(currentLong, currentLat) * 10) / 10;
@@ -23,7 +23,12 @@ function updateText() {
       resultString += "Sri is in Pittsburgh!\nSri is";
     }
     resultString += " at " + item.venue.name;
-    resultString += " (as recently as " + Math.round(minutesSinceCheckin) + " minutes ago at " + (new Date(date * 1000)).toLocaleTimeString() + ".)";
+    if (minutesSinceCheckin > 120) {
+      timeAgo = Math.round(minutesSinceCheckin / 60 * 2) / 2 + " hours ago";
+    } else {
+      timeAgo = Math.round(minutesSinceCheckin) + " minutes ago";
+    }
+    resultString += " (as recently as " + timeAgo + " at " + (new Date(date * 1000)).toLocaleTimeString() + ".)";
     $("#sri").text(resultString);
   });
 }
@@ -63,6 +68,7 @@ function updatePic() {
       width: widthMultiplier,
       height: heightMultiplier
     });
+    $("#sripic").attr("style", "visibility:show");
   };
 }
 
