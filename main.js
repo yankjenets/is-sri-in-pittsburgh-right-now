@@ -1,15 +1,9 @@
 $(document).ready(function() {
-  update();
-  addSriClick();
+  updateText();
+  updatePic();
 });
 
-function addSriClick() {
-  $("#update").click(function() {
-    update();
-  });
-}
-
-function update() {
+function updateText() {
   var accessToken = "JGS4NPW5EQUA3OBTI0L5XU33H2UJBHL5XHDUTMRENV2APGHL";
   var sriUser = "https://api.foursquare.com/v2/users/61236?oauth_token=" + accessToken + "&v=20131023";
   $.get(sriUser, function(data, status) {
@@ -22,9 +16,11 @@ function update() {
     var kilometersFromPittsburgh = Math.round(calculateDistance(currentLong, currentLat) * 10) / 10;
     var resultString = "";
     if (item.venue.location.city != "Pittsburgh") {
-      resultString += "No, Sri is not in Pittsburgh.\nSri is " + kilometersFromPittsburgh + " kilometers away from Pittsburgh in the city " + item.venue.location.city;
+      $("#answer").text("No.");
+      resultString += "Sri is not in Pittsburgh.\nSri is " + kilometersFromPittsburgh + " kilometers away from Pittsburgh in the city " + item.venue.location.city;
     } else {
-      resultString += "Yes, Sri is in Pittsburgh!\nSri is";
+      $("#answer").text("Yes.");
+      resultString += "Sri is in Pittsburgh!\nSri is";
     }
     resultString += " at " + item.venue.name;
     resultString += " (as recently as " + Math.round(minutesSinceCheckin) + " minutes ago at " + (new Date(date * 1000)).toLocaleTimeString() + ".)";
@@ -47,4 +43,25 @@ function calculateDistance(lon1, lat1) {
           Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
   return R * c;
+}
+
+function updatePic() {
+  var totalImages = 8
+  var randImage = Math.floor(Math.random() * totalImages)
+
+  img = new Image();
+  var widthMultiplier = "";
+  var heightMultiplier = "";
+  img.src = "pictures/" + randImage + ".jpg";
+  img.onload = function() {
+    if (img.width > 1200) {
+      widthMultiplier = "50%";
+      heightMultiplier = "50%";
+    }
+    $("#sripic").attr({
+      src: img.src,
+      width: widthMultiplier,
+      height: heightMultiplier
+    });
+  };
 }
