@@ -1,9 +1,12 @@
 $(document).ready(function() {
+  update();
   addSriClick();
 });
 
 function addSriClick() {
-  $("#update").click(update());
+  $("#update").click(function() {
+    update();
+  });
 }
 
 function update() {
