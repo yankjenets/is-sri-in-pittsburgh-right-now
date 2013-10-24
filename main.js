@@ -19,10 +19,11 @@ function update() {
     var kilometersFromPittsburgh = Math.round(calculateDistance(currentLong, currentLat) * 10) / 10;
     var resultString = "";
     if (item.venue.location.city != "Pittsburgh") {
-      resultString += "Sri is " + kilometersFromPittsburgh + " kilometers away from Pittsburgh in the city " + item.venue.location.city;
+      resultString += "No, Sri is not in Pittsburgh.\nSri is " + kilometersFromPittsburgh + " kilometers away from Pittsburgh in the city " + item.venue.location.city;
     } else {
-      resultString += "Sri is in Pittsburgh!";
+      resultString += "Yes, Sri is in Pittsburgh!\nSri is";
     }
+    resultString += " at " + item.venue.name;
     resultString += " (as recently as " + Math.round(minutesSinceCheckin) + " minutes ago at " + (new Date(date * 1000)).toLocaleTimeString() + ".)";
     $("#sri").text(resultString);
   });
