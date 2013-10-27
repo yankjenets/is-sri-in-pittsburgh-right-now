@@ -51,7 +51,7 @@ function calculateDistance(lon1, lat1) {
 }
 
 function updatePic() {
-  var totalImages = 8
+  var totalImages = 6
   var randImage = Math.floor(Math.random() * totalImages)
 
   img = new Image();
